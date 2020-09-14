@@ -28,7 +28,7 @@
 /**
  * Marlin release version identifier
  */
-//#define SHORT_BUILD_VERSION "2.0.6.1"
+#define SHORT_BUILD_VERSION "2.0.6.1"
 
 /**
  * Verbose version identifier which should contain a reference to the location
@@ -41,12 +41,12 @@
  * here we define this default string as the date where the latest release
  * version was tagged.
  */
-//#define STRING_DISTRIBUTION_DATE "2020-07-09"
+#define STRING_DISTRIBUTION_DATE "2020-07-09"
 
 /**
  * Defines a generic printer name to be output to the LCD after booting Marlin.
  */
-//#define MACHINE_NAME "Sidewinder X1"
+#define MACHINE_NAME "Sidewinder X1"
 
 /**
  * The SOURCE_CODE_URL is the location where users will find the Marlin Source

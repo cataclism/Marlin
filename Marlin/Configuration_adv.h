@@ -2283,7 +2283,7 @@
 
   #if AXIS_IS_TMC(Y)
     #define Y_CURRENT       810
-    #define Y_CURRENT_HOME  Y_CURRENT
+    #define Y_CURRENT_HOME  600
     #define Y_MICROSTEPS     16
     #define Y_RSENSE          0.11
     #define Y_CHAIN_POS      -1

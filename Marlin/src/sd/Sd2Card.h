@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (c) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (c) 2011 Camiel Gubbels / Erik van der Zalm
@@ -16,7 +16,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #pragma once
@@ -38,7 +38,7 @@
 
 #include <stdint.h>
 
-uint16_t const SD_INIT_TIMEOUT = 2000,    // init timeout ms
+uint16_t const SD_INIT_TIMEOUT = 1000,    // init timeout ms
                SD_ERASE_TIMEOUT = 10000,  // erase timeout ms
                SD_READ_TIMEOUT = 300,     // read timeout ms
                SD_WRITE_TIMEOUT = 600;    // write time out ms
@@ -78,16 +78,13 @@ uint8_t const SD_CARD_TYPE_SD1  = 1,                    // Standard capacity V1 
               SD_CARD_TYPE_SDHC = 3;                    // High Capacity SD card
 
 /**
- * Define SOFTWARE_SPI to use bit-bang SPI
+ * define SOFTWARE_SPI to use bit-bang SPI
  */
-#if EITHER(MEGA_SOFT_SPI, USE_SOFTWARE_SPI)
+#if MEGA_SOFT_SPI
   #define SOFTWARE_SPI
-#endif
-
-#if IS_TEENSY_35_36 || IS_TEENSY_40_41
-  #include "NXP_SDHC.h"
-  #define BUILTIN_SDCARD 254
-#endif
+#elif USE_SOFTWARE_SPI
+  #define SOFTWARE_SPI
+#endif  // MEGA_SOFT_SPI
 
 /**
  * \class Sd2Card

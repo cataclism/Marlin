@@ -571,6 +571,9 @@
   #include "stm32f1/pins_TRIGORILLA_PRO.h"      // STM32F1                                env:trigorilla_pro
 #elif MB(FLY_MINI)
   #include "stm32f1/pins_FLY_MINI.h"            // STM32F1                                env:FLY_MINI
+#elif MB(MD_D301)
+  #include "stm32/pins_MD_D301.h"               // STM32F1                                env:STM32F103ZE_bigtree
+
 
 //
 // ARM Cortex-M4F

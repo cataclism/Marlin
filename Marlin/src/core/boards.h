@@ -297,7 +297,7 @@
 #define BOARD_MKS_ROBIN               4011  // MKS Robin (STM32F103ZET6)
 #define BOARD_MKS_ROBIN_MINI          4012  // MKS Robin Mini (STM32F103VET6)
 #define BOARD_MKS_ROBIN_NANO          4013  // MKS Robin Nano (STM32F103VET6)
-#define BOARD_MKS_ROBIN_NANO_V2       4014  // MKS Robin Nano V2 (STM32F103VET6)
+#define BOARD_MD_D301                 4014  // D301 V1.0 (STM32F103ZE)
 #define BOARD_MKS_ROBIN_LITE          4015  // MKS Robin Lite/Lite2 (STM32F103RCT6)
 #define BOARD_MKS_ROBIN_LITE3         4016  // MKS Robin Lite3 (STM32F103RCT6)
 #define BOARD_MKS_ROBIN_PRO           4017  // MKS Robin Pro (STM32F103ZET6)
@@ -321,7 +321,7 @@
 #define BOARD_CREALITY_V427           4035  // Creality v4.2.7 (STM32F103RE)
 #define BOARD_TRIGORILLA_PRO          4036  // Trigorilla Pro (STM32F103ZET6)
 #define BOARD_FLY_MINI                4037  // FLY MINI (STM32F103RCT6)
-#define BOARD_MD_D301                 4014  // D301 V1.0 (STM32F103ZE)
+#define BOARD_MKS_ROBIN_NANO_V2       4038  // MKS Robin Nano V2 (STM32F103VET6)
 
 //
 // ARM Cortex-M4F

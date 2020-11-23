@@ -25,11 +25,11 @@
 // 320*320*400
 // 420*420*400
 // The size of the print bed
-#define X_BED_SIZE 420
-#define Y_BED_SIZE 420
-#define Z_MAX_POS  400
+#define X_BED_SIZE 230
+#define Y_BED_SIZE 230
+#define Z_MAX_POS  260
 
-#define D301_AUTO_LEVELING
+//#define D301_AUTO_LEVELING
 
 #ifdef D301_AUTO_LEVELING
   #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN

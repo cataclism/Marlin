@@ -2237,8 +2237,8 @@ const char *const kr_pack[LABEL_NUM]={
 };
 
 //#define LANGUAGE_RUSSIAN
-//#define LANGUAGE_EN
-#define LANGUAGE_EN_CN
+#define LANGUAGE_EN
+//#define LANGUAGE_EN_CN
 //#define LANGUAGE_KOREAN
 //#define LANGUAGE_SPAIN
 

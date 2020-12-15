@@ -263,31 +263,6 @@ void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int
   END_MENU();
 }
 
-#if E_MANUAL
-
-  inline void _goto_menu_move_distance_e() {
-    ui.goto_screen([]{ _menu_move_distance(E_AXIS, []{ lcd_move_e(TERN_(MULTI_MANUAL, active_extruder)); }, -1); });
-  }
-
-  inline void _menu_move_distance_e_maybe() {
-    #if ENABLED(PREVENT_COLD_EXTRUSION)
-      const bool too_cold = thermalManager.tooColdToExtrude(active_extruder);
-      if (too_cold) {
-        ui.goto_screen([]{
-          MenuItem_confirm::select_screen(
-            GET_TEXT(MSG_BUTTON_PROCEED), GET_TEXT(MSG_BACK),
-            _goto_menu_move_distance_e, ui.goto_previous_screen,
-            GET_TEXT(MSG_HOTEND_TOO_COLD), (const char *)nullptr, PSTR("!")
-          );
-        });
-        return;
-      }
-    #endif
-    _goto_menu_move_distance_e();
-  }
-
-#endif // E_MANUAL
-
 void menu_move() {
   START_MENU();
   BACK_ITEM(MSG_MOTION);

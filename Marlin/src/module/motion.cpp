@@ -1435,6 +1435,85 @@ void set_axis_is_not_at_home(const AxisEnum axis) {
   #endif
 }
 
+#ifdef TMC_HOME_PHASE
+  /**
+   * Move the axis back to its home_phase if set and driver is capable (TMC)
+   *
+   * Improves homing repeatability by homing to stepper coil's nearest absolute
+   * phase position. Trinamic drivers use a stepper phase table with 1024 values
+   * spanning 4 full steps with 256 positions each (ergo, 1024 positions).
+   */
+  void backout_to_tmc_homing_phase(const AxisEnum axis) {
+    const xyz_long_t home_phase = TMC_HOME_PHASE;
+
+    // check if home phase is disabled for this axis.
+    if (home_phase[axis] < 0) return;
+
+    int16_t phasePerUStep,      // TMC µsteps(phase) per Marlin µsteps
+            phaseCurrent,       // The TMC µsteps(phase) count of the current position
+            effectorBackoutDir, // Direction in which the effector mm coordinates move away from endstop.
+            stepperBackoutDir;  // Direction in which the TMC µstep count(phase) move away from endstop.
+
+    #define PHASE_PER_MICROSTEP(N) (256 / _MAX(1, N##_MICROSTEPS))
+
+    switch (axis) {
+      #ifdef X_MICROSTEPS
+        case X_AXIS:
+          phasePerUStep = PHASE_PER_MICROSTEP(X);
+          phaseCurrent = stepperX.get_microstep_counter();
+          effectorBackoutDir = -X_HOME_DIR;
+          stepperBackoutDir = INVERT_X_DIR ? effectorBackoutDir : -effectorBackoutDir;
+          break;
+      #endif
+      #ifdef Y_MICROSTEPS
+        case Y_AXIS:
+          phasePerUStep = PHASE_PER_MICROSTEP(Y);
+          phaseCurrent = stepperY.get_microstep_counter();
+          effectorBackoutDir = -Y_HOME_DIR;
+          stepperBackoutDir = INVERT_Y_DIR ? effectorBackoutDir : -effectorBackoutDir;
+          break;
+      #endif
+      #ifdef Z_MICROSTEPS
+        case Z_AXIS:
+          phasePerUStep = PHASE_PER_MICROSTEP(Z);
+          phaseCurrent = stepperZ.get_microstep_counter();
+          effectorBackoutDir = -Z_HOME_DIR;
+          stepperBackoutDir = INVERT_Z_DIR ? effectorBackoutDir : -effectorBackoutDir;
+          break;
+      #endif
+      default: return;
+    }
+
+    // Phase distance to nearest home phase position when moving in the backout direction from endstop(may be negative).
+    int16_t phaseDelta = (home_phase[axis] - phaseCurrent) * stepperBackoutDir;
+
+    // Check if home distance within endstop assumed repeatability noise of .05mm and warn.
+    if (ABS(phaseDelta) * planner.steps_to_mm[axis] / phasePerUStep < 0.05f)
+      SERIAL_ECHOLNPAIR("Selected home phase ", home_phase[axis],
+                       " too close to endstop trigger phase ", phaseCurrent,
+                       ". Pick a different phase for ", axis_codes[axis]);
+
+    // Skip to next if target position is behind current. So it only moves away from endstop.
+    if (phaseDelta < 0) phaseDelta += 1024;
+
+    // Convert TMC µsteps(phase) to whole Marlin µsteps to effector backout direction to mm
+    const float mmDelta = int16_t(phaseDelta / phasePerUStep) * effectorBackoutDir * planner.steps_to_mm[axis];
+
+    // Optional debug messages
+    if (DEBUGGING(LEVELING)) {
+      DEBUG_ECHOLNPAIR(
+        "Endstop ", axis_codes[axis], " hit at Phase:", phaseCurrent,
+        " Delta:", phaseDelta, " Distance:", mmDelta
+      );
+    }
+
+    if (mmDelta != 0) {
+      // Retrace by the amount computed in mmDelta.
+      do_homing_move(axis, mmDelta, get_homing_bump_feedrate(axis));
+    }
+  }
+#endif
+
 /**
  * Home an individual "raw axis" to its endstop.
  * This applies to XYZ on Cartesian and Core robots, and

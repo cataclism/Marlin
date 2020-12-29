@@ -1595,6 +1595,14 @@ void Temperature::init() {
     #endif
   #endif
 
+  // Thermistor activation by MCU pin
+  #if PIN_EXISTS(TEMP_0_TR_ENABLE)
+    OUT_WRITE(TEMP_0_TR_ENABLE_PIN, ENABLED(HEATER_0_USES_MAX6675));
+  #endif
+  #if PIN_EXISTS(TEMP_1_TR_ENABLE)
+    OUT_WRITE(TEMP_1_TR_ENABLE_PIN, ENABLED(HEATER_1_USES_MAX6675));
+  #endif
+
   #if BOTH(PIDTEMP, PID_EXTRUSION_SCALING)
     last_e_position = 0;
   #endif

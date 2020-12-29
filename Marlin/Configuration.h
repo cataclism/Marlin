@@ -21,22 +21,7 @@
  */
 #pragma once
 
-// 230*230*260
-// 320*320*400
-// 420*420*400
-// The size of the print bed
-#define X_BED_SIZE 230
-#define Y_BED_SIZE 230
-#define Z_MAX_POS  260
 
-// #define D301_AUTO_LEVELING
-
-#ifdef D301_AUTO_LEVELING
-  #define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
-  #define BLTOUCH
-  #define Z_SAFE_HOMING
-  #define AUTO_BED_LEVELING_BILINEAR
-#endif
 
 /**
  * Configuration.h
@@ -1081,6 +1066,9 @@
 
 // @section machine
 
+#define X_BED_SIZE 230
+#define Y_BED_SIZE 230
+
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1088,6 +1076,8 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
+#define Z_MAX_POS  260
+
 
 /**
  * Software Endstops

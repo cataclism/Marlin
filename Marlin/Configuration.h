@@ -785,7 +785,7 @@
  *   M204 T    Travel Acceleration
  */
 #define DEFAULT_ACCELERATION          600    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  10000    // E acceleration for retracts
+#define DEFAULT_RETRACT_ACCELERATION  5000    // E acceleration for retracts
 #define DEFAULT_TRAVEL_ACCELERATION   100    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
@@ -1002,7 +1002,7 @@
 #define PROBING_MARGIN 25
 
 // X and Y axis travel speed (mm/min) between probes
-#define XY_PROBE_SPEED (133*60)
+#define XY_PROBE_SPEED (115*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
